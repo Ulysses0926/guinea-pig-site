@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>天竺鼠小百科</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans TC', sans-serif; color: #5C4434;
+         line-height: 1.7; min-height: 100vh;
+         background: radial-gradient(1200px 600px at 50% -200px, #FFE8CF 0%, #FFF4E8 55%, #FFF8F0 100%); }
+  .container { max-width: 1120px; margin: 0 auto; padding: 20px 16px 40px; }
+
+  /* Header */
+  .header { text-align: center; padding: 40px 0 24px; }
+  .header h1 { font-family: 'Baloo 2', 'Noto Sans TC', sans-serif;
+               font-size: 42px; font-weight: 800; color: #7A4E2E; }
+  .header .hero-emoji { font-size: 76px; display: block; margin-bottom: 4px;
+                    filter: drop-shadow(0 8px 14px rgba(180,120,70,.25)); }
+  .header p { color: #B08454; font-size: 18px; font-weight: 500; margin-top: 8px; }
+
+  /* Tabs */
+  .tabs { position: sticky; top: 0; z-index: 20; display: flex; justify-content: center;
+          padding: 14px 16px; background: linear-gradient(180deg, rgba(255,244,232,.96) 60%, rgba(255,244,232,0));
+          backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); margin-bottom: 28px; }
+  .tab-group { display: inline-flex; gap: 6px; padding: 7px; background: #FFFFFF;
+               border-radius: 999px; box-shadow: 0 10px 30px rgba(180,120,70,.16), inset 0 0 0 1px rgba(180,120,70,.06); }
+  .tab-btn { border: none; cursor: pointer; font-size: 15.5px; font-weight: 700;
+             padding: 11px 24px; border-radius: 999px; transition: all 0.2s ease;
+             background: transparent; color: #A87C4E; font-family: 'Noto Sans TC', sans-serif; }
+  .tab-btn.active { background: linear-gradient(120deg, #FFB872, #F59E54); color: #FFFFFF;
+                    box-shadow: 0 8px 18px rgba(230,140,60,.35); }
+  .tab-btn:not(.active):hover { color: #7A4E2E; background: rgba(255,184,114,0.12); }
+
+  /* Tab content */
+  .tab-content { display: none; animation: fadeIn 0.35s ease; }
+  .tab-content.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Breed cards */
+  .breed-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+  .breed-card { background: #FFFFFF; border-radius: 26px; overflow: hidden;
+                box-shadow: 0 14px 34px rgba(180,120,70,.13); border: 1px solid rgba(180,120,70,.07);
+                transition: transform 0.2s, box-shadow 0.2s; cursor: default; }
+  .breed-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(180,120,70,.18); }
+  .breed-img-wrap { aspect-ratio: 4/3; background: linear-gradient(135deg, #FFE7CE, #FFD9B8); overflow: hidden; }
+  .breed-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .breed-body { padding: 18px 20px 20px; }
+  .breed-name { font-size: 21px; font-weight: 900; color: #7A4E2E; margin-bottom: 2px; }
+  .breed-eng { font-family: 'Baloo 2', sans-serif; font-size: 14px; font-weight: 600;
+               color: #D69A5E; margin-bottom: 8px; }
+  .breed-desc { font-size: 14.5px; line-height: 1.7; color: #6B5240; }
+  .breed-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+  .breed-tag { font-size: 12.5px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
+               background: #FFF0DD; color: #B5713C; }
+
+  /* Habit section */
+  .habit-card { background: #FFFFFF; border-radius: 26px; overflow: hidden;
+                box-shadow: 0 14px 34px rgba(180,120,70,.13); border: 1px solid rgba(180,120,70,.07);
+                margin-bottom: 20px; }
+  .habit-header { padding: 20px 24px; display: flex; align-items: center; gap: 16px; }
+  .habit-card:nth-child(1) .habit-header { background: linear-gradient(120deg, #FFE9D2, #FFDCBC); }
+  .habit-card:nth-child(2) .habit-header { background: linear-gradient(120deg, #E6F1DC, #D6E9C4); }
+  .habit-card:nth-child(3) .habit-header { background: linear-gradient(120deg, #FCE6E0, #F8D5CB); }
+  .habit-card:nth-child(4) .habit-header { background: linear-gradient(120deg, #E4EEF6, #D2E2F0); }
+  .habit-icon { width: 52px; height: 52px; background: #FFFFFF; border-radius: 14px;
+                display: flex; align-items: center; justify-content: center; font-size: 26px;
+                box-shadow: 0 4px 12px rgba(0,0,0,.06); flex-shrink: 0; }
+  .habit-card h3 { font-size: 18px; font-weight: 800; color: #7A4E2E; }
+  .habit-list { list-style: none; padding: 8px 24px 20px; }
+  .habit-list li { padding: 10px 0; font-size: 15px; line-height: 1.65; color: #6B5240;
+                   border-bottom: 1px dashed rgba(180,120,70,.14); }
+  .habit-list li:last-child { border-bottom: none; }
+  .habit-list li::before { content: ''; display: inline-block; width: 7px; height: 7px;
+    border-radius: 50%; margin-right: 12px; vertical-align: middle; }
+  .habit-card:nth-child(1) .habit-list li::before { background: #E89A52; }
+  .habit-card:nth-child(2) .habit-list li::before { background: #86AA5F; }
+  .habit-card:nth-child(3) .habit-list li::before { background: #E08A6E; }
+  .habit-card:nth-child(4) .habit-list li::before { background: #6E9BC4; }
+
+  /* Diet section */
+  .diet-section { margin-bottom: 24px; }
+  .diet-section h3 { font-size: 18px; font-weight: 800; margin-bottom: 14px; padding: 14px 20px;
+                     border-radius: 26px; }
+  .diet-section.can-eat h3 { background: linear-gradient(120deg, #E6F1DC, #D6E9C4); color: #5A8A30; }
+  .diet-section.cant-eat h3 { background: linear-gradient(120deg, #FCE6E0, #F8D5CB); color: #C05454; }
+  .diet-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+  .diet-item { background: #FFFFFF; border-radius: 18px; padding: 14px 16px;
+               box-shadow: 0 8px 22px rgba(180,120,70,.1); border: 1px solid rgba(180,120,70,.07);
+               font-size: 14.5px; display: flex; align-items: center; gap: 10px; }
+  .diet-item .emoji { font-size: 24px; flex-shrink: 0; }
+  .diet-item .info { flex: 1; }
+  .diet-item .name { font-weight: 700; color: #7A4E2E; }
+  .diet-item .note { font-size: 12.5px; color: #B08454; }
+  .diet-tip { background: linear-gradient(120deg, #FFE5C7, #FFD8AE); border-radius: 26px;
+              padding: 26px 30px; font-size: 15px; color: #6B5240; margin-top: 20px;
+              box-shadow: 0 14px 34px rgba(180,120,70,.16); }
+  .diet-tip strong { color: #D68A3C; }
+
+  /* Sounds */
+  .sound-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .sound-card { background: #FFFFFF; border-radius: 26px; overflow: hidden;
+                box-shadow: 0 14px 34px rgba(180,120,70,.13); border: 1px solid rgba(180,120,70,.07); }
+  .sound-header { padding: 20px 24px; display: flex; align-items: center; gap: 16px; }
+  .sound-icon { width: 52px; height: 52px; background: #FFFFFF; border-radius: 14px;
+                display: flex; align-items: center; justify-content: center; font-size: 26px;
+                box-shadow: 0 4px 12px rgba(0,0,0,.06); flex-shrink: 0; }
+  .sound-card:nth-child(1) .sound-header { background: linear-gradient(120deg, #FFE9D2, #FFDCBC); }
+  .sound-card:nth-child(2) .sound-header { background: linear-gradient(120deg, #E6F1DC, #D6E9C4); }
+  .sound-card:nth-child(3) .sound-header { background: linear-gradient(120deg, #E4EEF6, #D2E2F0); }
+  .sound-card:nth-child(4) .sound-header { background: linear-gradient(120deg, #FCE6E0, #F8D5CB); }
+  .sound-card:nth-child(5) .sound-header { background: linear-gradient(120deg, #F3E6F6, #E8D6F0); }
+  .sound-card:nth-child(6) .sound-header { background: linear-gradient(120deg, #FFF0DD, #FFE5C7); }
+  .sound-card:nth-child(7) .sound-header { background: linear-gradient(120deg, #E6F1DC, #D6E9C4); }
+  .sound-card:nth-child(8) .sound-header { background: linear-gradient(120deg, #E4EEF6, #D2E2F0); }
+  .sound-card:nth-child(9) .sound-header { background: linear-gradient(120deg, #FCE6E0, #F8D5CB); }
+  .sound-card h3 { font-size: 18px; font-weight: 800; color: #7A4E2E; }
+  .sound-card .sound-en { font-family: 'Baloo 2', sans-serif; font-size: 13px; font-weight: 600; color: #D69A5E; }
+  .sound-body { padding: 16px 24px 20px; }
+  .sound-body p { font-size: 14.5px; line-height: 1.7; color: #6B5240; }
+  .sound-mood { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 5px 12px;
+                border-radius: 999px; margin-top: 10px; }
+  .mood-happy { background: #E6F1DC; color: #5E8C4A; }
+  .mood-warn { background: #FFF0DD; color: #B5713C; }
+  .mood-danger { background: #FCE6E0; color: #C05040; }
+  .mood-neutral { background: #E4EEF6; color: #4E7A8A; }
+  .sound-video { margin-top: 14px; border-radius: 14px; overflow: hidden; aspect-ratio: 16/9; }
+  .sound-video iframe { width: 100%; height: 100%; border: none; }
+  .sound-sources { margin-top: 28px; padding: 20px 24px; background: #FFFFFF; border-radius: 26px;
+                   box-shadow: 0 14px 34px rgba(180,120,70,.13); border: 1px solid rgba(180,120,70,.07);
+                   font-size: 13px; color: #B08454; line-height: 1.8; }
+  .sound-sources strong { color: #7A4E2E; }
+  .sound-sources a { color: #C75D3C; text-decoration: none; }
+  .sound-sources a:hover { text-decoration: underline; }
+
+  /* Game */
+  .game-wrapper { text-align: center; }
+  .game-canvas-wrap { position: relative; display: inline-block; width: 100%; max-width: 800px; }
+  .game-canvas { width: 100%; display: block; border-radius: 20px;
+                 box-shadow: 0 14px 34px rgba(180,120,70,.18); border: 3px solid rgba(180,120,70,.12);
+                 touch-action: none; background: #B5D89C; }
+  .game-hud { position: absolute; top: 0; left: 0; right: 0; padding: 12px 16px;
+              display: flex; align-items: center; gap: 12px; pointer-events: none;
+              font-family: 'Baloo 2', sans-serif; font-weight: 700; color: #FFF;
+              text-shadow: 0 2px 6px rgba(0,0,0,.4); font-size: 18px; }
+  .game-hud .hearts { font-size: 20px; letter-spacing: 1px; }
+  .game-hud .stamina-wrap { flex: 1; max-width: 180px; height: 16px; background: rgba(0,0,0,.3);
+                            border-radius: 10px; overflow: hidden; }
+  .game-hud .stamina-bar { height: 100%; background: linear-gradient(90deg, #F5A623, #F7D046);
+                           border-radius: 10px; transition: width 0.15s; }
+  .game-hud .stamina-bar.low { background: linear-gradient(90deg, #E05A3A, #F5A623); }
+  .game-hud .score-display { margin-left: auto; }
+  .game-overlay { position: absolute; inset: 0; display: flex; flex-direction: column;
+                  align-items: center; justify-content: center; background: rgba(255,244,232,.93);
+                  border-radius: 20px; z-index: 5; }
+  .game-overlay.hidden { display: none; }
+  .game-overlay h2 { font-family: 'Baloo 2', sans-serif; font-size: 34px; color: #7A4E2E; margin-bottom: 4px; }
+  .game-overlay .subtitle { font-size: 16px; color: #B08454; margin-bottom: 16px; }
+  .game-overlay .final-score { font-family: 'Baloo 2', sans-serif; font-size: 28px; color: #D68A3C; margin-bottom: 20px; }
+  .game-overlay .instructions { font-size: 14px; color: #6B5240; line-height: 2; margin-bottom: 20px; max-width: 360px; text-align: left; }
+  .game-start-btn { border: none; cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
+                    font-size: 18px; font-weight: 700; padding: 14px 40px; border-radius: 999px;
+                    background: linear-gradient(120deg, #FFB872, #F59E54); color: #FFF;
+                    box-shadow: 0 8px 20px rgba(230,140,60,.4); transition: transform 0.15s; }
+  .game-start-btn:hover { transform: scale(1.05); }
+  .game-start-btn:active { transform: scale(0.97); }
+  .game-mobile-hint { font-size: 13px; color: #B08454; margin-top: 12px; display: none; }
+  @media (pointer: coarse) { .game-mobile-hint { display: block; } }
+  .game-legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+                 margin-top: 16px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .game-legend-item { font-size: 13px; color: #6B5240; background: #FFF; padding: 6px 14px;
+                      border-radius: 12px; box-shadow: 0 4px 12px rgba(180,120,70,.08); }
+
+  /* Joystick + Eat log */
+  .game-controls-row { display: flex; gap: 12px; margin-top: 12px; max-width: 800px;
+                       margin-left: auto; margin-right: auto; align-items: flex-start; }
+  .joystick-zone { width: 130px; height: 130px; flex-shrink: 0; position: relative;
+                   background: rgba(255,255,255,.75); border-radius: 50%;
+                   box-shadow: inset 0 4px 14px rgba(180,120,70,.18);
+                   border: 2.5px solid rgba(180,120,70,.15); touch-action: none; display: none; }
+  .joystick-thumb { width: 52px; height: 52px; border-radius: 50%; position: absolute;
+                    top: 50%; left: 50%; transform: translate(-50%,-50%);
+                    background: linear-gradient(135deg,#FFB872,#F59E54);
+                    box-shadow: 0 4px 14px rgba(230,140,60,.45); pointer-events: none; }
+  @media (pointer: coarse) { .joystick-zone { display: block; } }
+  .game-eat-log { flex: 1; background: #FFF; border-radius: 18px; padding: 10px 14px;
+                  box-shadow: 0 8px 22px rgba(180,120,70,.1); border: 1px solid rgba(180,120,70,.07);
+                  max-height: 150px; overflow-y: auto; }
+  .eat-log-title { font-size: 13px; font-weight: 700; color: #7A4E2E; margin-bottom: 6px; }
+  .eat-log-list { list-style: none; padding: 0; margin: 0; }
+  .eat-log-list li { font-size: 12.5px; color: #6B5240; padding: 3px 0;
+                     border-bottom: 1px dashed rgba(180,120,70,.1); }
+  .eat-log-list li:last-child { border-bottom: none; }
+  .eat-log-good { color: #5E8C4A !important; }
+  .eat-log-sup { color: #4E7AB0 !important; }
+  .eat-log-bad { color: #C05040 !important; }
+  .eat-log-empty { font-size: 12px; color: #B08454; font-style: italic; }
+
+  /* Footer */
+  .footer { text-align: center; padding: 32px 0 12px; font-size: 14px; font-weight: 600; color: #B89066; }
+
+  @media (max-width: 500px) {
+    .header h1 { font-size: 32px; }
+    .header .hero-emoji { font-size: 56px; }
+    .tabs { padding: 12px 8px; }
+    .tab-group { flex-wrap: wrap; gap: 5px; padding: 6px; }
+    .tab-btn { font-size: 13px; padding: 8px 12px; }
+    .breed-grid { grid-template-columns: 1fr; }
+    .diet-grid { grid-template-columns: 1fr 1fr; }
+    .sound-grid { grid-template-columns: 1fr; }
+    .game-canvas-wrap { overflow: visible; }
+    .game-overlay { justify-content: flex-start; padding: 16px 20px; bottom: auto; min-height: 100%; }
+    .game-overlay h2 { font-size: 22px; margin-bottom: 2px; }
+    .game-overlay .subtitle { font-size: 14px; margin-bottom: 10px; }
+    .game-overlay .instructions { font-size: 12.5px; line-height: 1.9; margin-bottom: 14px; }
+    .game-start-btn { font-size: 16px; padding: 12px 32px; }
+    .game-mobile-hint { font-size: 12px; margin-top: 8px; }
+    .game-overlay .final-score { font-size: 24px; margin-bottom: 14px; }
+    .game-legend { gap: 6px; }
+    .game-legend-item { font-size: 12px; padding: 5px 10px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1><span class="hero-emoji">🐹</span>天竺鼠小百科</h1>
+    <p>認識這些圓滾滾的小可愛</p>
+  </div>
+
+  <div class="tabs">
+    <div class="tab-group">
+      <button class="tab-btn active" data-tab="breeds">品種介紹</button>
+      <button class="tab-btn" data-tab="habits">生活習慣</button>
+      <button class="tab-btn" data-tab="diet">飲食指南</button>
+      <button class="tab-btn" data-tab="sounds">叫聲圖鑑</button>
+      <button class="tab-btn" data-tab="game" id="tabGameBtn" style="display:none">🎮 小遊戲</button>
+    </div>
+  </div>
+
+  <!-- Tab 1: 品種介紹 -->
+  <div class="tab-content active" id="tab-breeds">
+    <div class="breed-grid">
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/american.jpg" alt="美國短毛天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">美國短毛 / 英國短毛</div>
+        <div class="breed-eng">American / English</div>
+        <div class="breed-desc">最常見的品種，毛短而滑順，性格溫馴親人，非常適合新手飼主。體型圓潤，各種毛色都有。美國協會稱 American，英國協會稱 English，其實是同一品種。</div>
+        <div class="breed-tags"><span class="breed-tag">新手推薦</span><span class="breed-tag">好照顧</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/abyssinian.jpg" alt="阿比西尼亞天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">阿比西尼亞</div>
+        <div class="breed-eng">Abyssinian</div>
+        <div class="breed-desc">全身佈滿「玫瑰花結」般的毛旋，毛質粗硬蓬鬆。個性活潑好動、好奇心強，像小小探險家。</div>
+        <div class="breed-tags"><span class="breed-tag">活潑好動</span><span class="breed-tag">毛旋特徵</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/peruvian.jpg" alt="秘魯天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">秘魯天竺鼠</div>
+        <div class="breed-eng">Peruvian</div>
+        <div class="breed-desc">擁有超長直毛，可長達 30 公分以上，像披著絲綢斗篷。需要定期梳理，適合有經驗的飼主。</div>
+        <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">需勤梳理</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/silkie.jpg" alt="雪特蘭天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">雪特蘭</div>
+        <div class="breed-eng">Silkie / Sheltie</div>
+        <div class="breed-desc">長毛從頭部向後流瀉，像一頭柔順長髮。毛質絲滑柔軟，性格溫和害羞，喜歡安靜的環境。</div>
+        <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">溫和害羞</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/teddy.jpg" alt="泰迪天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">泰迪</div>
+        <div class="breed-eng">Teddy</div>
+        <div class="breed-desc">毛質密實有彈性，摸起來像絨毛玩具。鼻子較寬，整體圓潤可愛。性格友善，喜歡被撫摸。</div>
+        <div class="breed-tags"><span class="breed-tag">絨毛觸感</span><span class="breed-tag">親人</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/texel.jpg" alt="特塞爾天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">特塞爾</div>
+        <div class="breed-eng">Texel</div>
+        <div class="breed-desc">全身覆蓋捲曲長毛，像燙了小捲的貴賓狗。是最需要毛髮照顧的品種之一，但外型非常吸睛。</div>
+        <div class="breed-tags"><span class="breed-tag">捲毛</span><span class="breed-tag">高顏值</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/coronet.jpg" alt="冠毛天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">冠毛天竺鼠</div>
+        <div class="breed-eng">Coronet</div>
+        <div class="breed-desc">頭頂有一個漂亮的毛冠（玫瑰花結），搭配全身長毛，像戴了皇冠的小公主。</div>
+        <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">頭頂毛冠</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/crested.jpg" alt="白冠天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">白冠天竺鼠</div>
+        <div class="breed-eng">White Crested</div>
+        <div class="breed-desc">短毛品種，額頭有一撮白色毛冠，像頂著一朵小白花。跟美國短毛一樣好照顧，辨識度很高。</div>
+        <div class="breed-tags"><span class="breed-tag">短毛</span><span class="breed-tag">白色毛冠</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/rex.jpg" alt="雷克斯天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">雷克斯</div>
+        <div class="breed-eng">Rex</div>
+        <div class="breed-desc">短而密的羊毛質感，毛直立蓬鬆，摸起來像天鵝絨。耳朵大而下垂，表情呆萌。</div>
+        <div class="breed-tags"><span class="breed-tag">羊毛觸感</span><span class="breed-tag">大耳朵</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/skinny.jpg" alt="無毛天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">無毛天竺鼠</div>
+        <div class="breed-eng">Skinny</div>
+        <div class="breed-desc">幾乎全身無毛，只有鼻子和腳上有少許毛。皮膚柔軟溫暖，需要注意保暖和防曬，適合無毛寵物愛好者。</div>
+        <div class="breed-tags"><span class="breed-tag">無毛</span><span class="breed-tag">需保暖</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/californian.jpg" alt="加州天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">加州天竺鼠</div>
+        <div class="breed-eng">Californian</div>
+        <div class="breed-desc">白色短毛為主，鼻子、耳朵和腳掌有深色斑塊。眼睛為黑色，臉部毛色不會隨季節變化，與喜馬拉雅外型相似但可由眼色區分。</div>
+        <div class="breed-tags"><span class="breed-tag">黑眼</span><span class="breed-tag">深色重點色</span></div>
+        </div>
+      </div>
+      <div class="breed-card">
+        <div class="breed-img-wrap"><img class="breed-img" src="img/himalayan.jpg" alt="喜馬拉雅天竺鼠" loading="lazy"></div>
+        <div class="breed-body">
+        <div class="breed-name">喜馬拉雅天竺鼠</div>
+        <div class="breed-eng">Himalayan</div>
+        <div class="breed-desc">純白短毛搭配鼻子、耳朵和腳掌的深色斑塊，最大特徵是紅色眼睛。臉部深色區域會隨溫度變化：天冷時變深、天熱時變淺。</div>
+        <div class="breed-tags"><span class="breed-tag">紅眼</span><span class="breed-tag">毛色隨溫度變</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2: 生活習慣 -->
+  <div class="tab-content" id="tab-habits">
+    <div class="habit-card">
+      <div class="habit-header">
+        <div class="habit-icon">👥</div>
+        <h3>社交天性</h3>
+      </div>
+      <ul class="habit-list">
+        <li>天竺鼠是群居動物，建議至少養兩隻作伴，避免孤獨憂鬱</li>
+        <li>同性別配對較容易（兩隻母鼠最穩定，兩隻公鼠需從小養起）</li>
+        <li>會用各種叫聲溝通：「wheek wheek」代表興奮或討食、咕嚕聲代表放鬆</li>
+        <li>喜歡被輕輕撫摸頭部和背部，但不喜歡被抓住或突然舉高</li>
+      </ul>
+    </div>
+    <div class="habit-card">
+      <div class="habit-header">
+        <div class="habit-icon">🏠</div>
+        <h3>居住環境</h3>
+      </div>
+      <ul class="habit-list">
+        <li>籠子最小尺寸：兩隻至少 120×60 cm，越大越好</li>
+        <li>底部鋪墊料（木屑、紙墊或布墊），避免鐵絲網底以免傷腳</li>
+        <li>需要躲藏小屋讓牠們有安全感，每隻至少一個</li>
+        <li>適宜溫度 18～24°C，怕熱也怕冷，避免陽光直射和風口</li>
+        <li>每天需要放風時間，在安全區域自由活動至少 1 小時</li>
+      </ul>
+    </div>
+    <div class="habit-card">
+      <div class="habit-header">
+        <div class="habit-icon">🎉</div>
+        <h3>行為特徵</h3>
+      </div>
+      <ul class="habit-list">
+        <li>「爆米花跳」（Popcorning）：開心時會突然原地蹦跳，是最可愛的行為！</li>
+        <li>晨昏活動型，清晨和傍晚最活躍，白天會小睡多次</li>
+        <li>天竺鼠不太會跳也不太會爬，但跑起來速度很快</li>
+        <li>會用下巴摩擦物品來標記領地（有氣味腺）</li>
+        <li>緊張害怕時會僵住不動（freeze），這是自然防禦反應</li>
+      </ul>
+    </div>
+    <div class="habit-card">
+      <div class="habit-header">
+        <div class="habit-icon">🩺</div>
+        <h3>健康照護</h3>
+      </div>
+      <ul class="habit-list">
+        <li>壽命約 5～7 年，有些可活到 8 歲以上</li>
+        <li>無法自行合成維生素 C，必須透過食物補充（每日 10～30 mg/kg）</li>
+        <li>牙齒會終生生長，需要大量乾草來磨牙</li>
+        <li>每 2～4 週需修剪指甲，過長會捲曲刺入肉墊</li>
+        <li>長毛品種需定期梳毛，避免打結和皮膚病</li>
+        <li>注意體重變化，突然變輕可能是生病的徵兆</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Tab 3: 飲食指南 -->
+  <div class="tab-content" id="tab-diet">
+    <div class="diet-tip" style="background:linear-gradient(120deg,#E6F1DC,#D6E9C4);cursor:pointer;text-align:center" onclick="document.querySelector('[data-tab=game]').click()">
+      <strong>🎮 來玩覓食小遊戲！</strong>用遊戲認識天竺鼠能吃什麼、不能吃什麼 →
+    </div>
+    <div class="diet-tip">
+      <strong>飲食黃金比例：</strong>80% 提摩西草（無限量供應）＋ 15% 新鮮蔬菜 ＋ 5% 飼料顆粒。乾淨飲水隨時提供！
+    </div>
+
+    <div class="diet-section can-eat">
+      <h3>✅ 可以吃</h3>
+      <div class="diet-grid">
+        <div class="diet-item"><span class="emoji">🌾</span><div class="info"><div class="name">提摩西草</div><div class="note">主食，無限量供應</div></div></div>
+        <div class="diet-item"><span class="emoji">🫑</span><div class="info"><div class="name">甜椒</div><div class="note">維生素 C 之王</div></div></div>
+        <div class="diet-item"><span class="emoji">🥬</span><div class="info"><div class="name">蘿蔓生菜</div><div class="note">每日可給</div></div></div>
+        <div class="diet-item"><span class="emoji">🥒</span><div class="info"><div class="name">小黃瓜</div><div class="note">水分多，適量給</div></div></div>
+        <div class="diet-item"><span class="emoji">🥕</span><div class="info"><div class="name">紅蘿蔔</div><div class="note">糖分高，少量當點心</div></div></div>
+        <div class="diet-item"><span class="emoji">🥦</span><div class="info"><div class="name">花椰菜</div><div class="note">富含維生素 C，適量</div></div></div>
+        <div class="diet-item"><span class="emoji">🌿</span><div class="info"><div class="name">香菜 / 巴西利</div><div class="note">鈣高，輪替給予</div></div></div>
+        <div class="diet-item"><span class="emoji">🍎</span><div class="info"><div class="name">蘋果</div><div class="note">去籽，每週 1-2 次</div></div></div>
+        <div class="diet-item"><span class="emoji">🫐</span><div class="info"><div class="name">藍莓</div><div class="note">少量當獎勵</div></div></div>
+        <div class="diet-item"><span class="emoji">🍓</span><div class="info"><div class="name">草莓</div><div class="note">糖分高，偶爾給</div></div></div>
+        <div class="diet-item"><span class="emoji">🍅</span><div class="info"><div class="name">番茄</div><div class="note">去蒂，少量即可</div></div></div>
+        <div class="diet-item"><span class="emoji">🌽</span><div class="info"><div class="name">玉米筍</div><div class="note">連殼可食，適量</div></div></div>
+      </div>
+    </div>
+
+    <div class="diet-section cant-eat">
+      <h3>❌ 不能吃</h3>
+      <div class="diet-grid">
+        <div class="diet-item"><span class="emoji">🥔</span><div class="info"><div class="name">馬鈴薯</div><div class="note">含龍葵鹼，有毒</div></div></div>
+        <div class="diet-item"><span class="emoji">🧅</span><div class="info"><div class="name">洋蔥 / 大蒜</div><div class="note">破壞紅血球，致命</div></div></div>
+        <div class="diet-item"><span class="emoji">🍫</span><div class="info"><div class="name">巧克力</div><div class="note">含可可鹼，有毒</div></div></div>
+        <div class="diet-item"><span class="emoji">🥑</span><div class="info"><div class="name">酪梨</div><div class="note">含 persin，有毒</div></div></div>
+        <div class="diet-item"><span class="emoji">🍞</span><div class="info"><div class="name">麵包 / 穀物</div><div class="note">消化不了，易脹氣</div></div></div>
+        <div class="diet-item"><span class="emoji">🥛</span><div class="info"><div class="name">乳製品</div><div class="note">乳糖不耐</div></div></div>
+        <div class="diet-item"><span class="emoji">🥜</span><div class="info"><div class="name">堅果 / 種子</div><div class="note">脂肪過高，易噎到</div></div></div>
+        <div class="diet-item"><span class="emoji">🥗</span><div class="info"><div class="name">冰山生菜</div><div class="note">營養極低，易腹瀉</div></div></div>
+        <div class="diet-item"><span class="emoji">🍄</span><div class="info"><div class="name">蘑菇</div><div class="note">可能含毒素</div></div></div>
+        <div class="diet-item"><span class="emoji">🌶️</span><div class="info"><div class="name">辣椒</div><div class="note">刺激腸胃</div></div></div>
+        <div class="diet-item"><span class="emoji">🫘</span><div class="info"><div class="name">豆類</div><div class="note">易脹氣</div></div></div>
+        <div class="diet-item"><span class="emoji">🍬</span><div class="info"><div class="name">人類零食</div><div class="note">糖鹽添加物皆不可</div></div></div>
+      </div>
+    </div>
+
+    <div class="diet-tip">
+      <strong>小提醒：</strong>新食物第一次給時少量嘗試，觀察 24 小時有無腹瀉或不適。蔬果要洗淨、常溫給予，不要直接從冰箱拿出來。
+    </div>
+  </div>
+
+  <!-- Tab 4: 叫聲圖鑑 -->
+  <div class="tab-content" id="tab-sounds">
+    <div class="sound-grid">
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">📢</div>
+          <div><h3>Wheek（呼叫聲）</h3><div class="sound-en">Wheeking</div></div>
+        </div>
+        <div class="sound-body">
+          <p>高亢的長聲尖叫，像是在喊「wheeeek wheeeek」。通常在看到食物、聽到冰箱開門或飼主出現時發出。有趣的是，野生天竺鼠不會發出這種聲音——這是專門用來跟人類溝通的叫聲！</p>
+          <span class="sound-mood mood-happy">😊 興奮 / 討食</span>
+          <div class="sound-video">
+            <iframe src="https://www.youtube.com/embed/CGZA_GbXRks" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😌</div>
+          <div><h3>Purr（咕嚕聲）</h3><div class="sound-en">Purring</div></div>
+        </div>
+        <div class="sound-body">
+          <p>低沉溫和的連續震動聲，類似貓的呼嚕聲但更低沉。低音調＋放鬆姿勢代表滿足舒適；高音調＋身體僵硬則代表緊張不安。聽音調和觀察肢體語言才能正確判斷。</p>
+          <span class="sound-mood mood-happy">😊 滿足放鬆</span>
+          <span class="sound-mood mood-warn">⚠️ 高音調＝緊張</span>
+          <div class="sound-video">
+            <iframe src="https://www.youtube.com/embed/o0vhplsjmow" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">💃</div>
+          <div><h3>Rumble（隆隆聲）</h3><div class="sound-en">Rumbling / Rumble strutting</div></div>
+        </div>
+        <div class="sound-body">
+          <p>比咕嚕聲更深沉的低頻震動，通常伴隨著屁股搖擺的「求偶舞」。公鼠對母鼠發出的求愛信號，也用於宣示領地地位。看到天竺鼠邊搖屁股邊發出低沉隆隆聲，就是在「撩」了。</p>
+          <span class="sound-mood mood-neutral">💕 求偶 / 宣示地位</span>
+          <div class="sound-video">
+            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=65" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😤</div>
+          <div><h3>Teeth Chattering（磨牙聲）</h3><div class="sound-en">Teeth Chattering</div></div>
+        </div>
+        <div class="sound-body">
+          <p>快速的牙齒碰撞聲「喀喀喀喀」，同時會露出牙齒、身體繃緊面向威脅方向。這是明確的警告信號：「不要靠近我！」如果兩隻天竺鼠互相磨牙，最好立刻分開牠們避免打架。</p>
+          <span class="sound-mood mood-danger">🚫 憤怒 / 警告</span>
+          <div class="sound-video">
+            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=145" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">🐦</div>
+          <div><h3>Chirping（啁啾聲）</h3><div class="sound-en">Chirping</div></div>
+        </div>
+        <div class="sound-body">
+          <p>聽起來就像小鳥在叫，是天竺鼠最罕見也最神秘的叫聲。發出時牠們會進入類似恍惚的狀態，眼神放空。科學界對此仍無定論，可能與輕微壓力或特殊情緒狀態有關。大部分天竺鼠一輩子都不會發出這種聲音。</p>
+          <span class="sound-mood mood-neutral">❓ 原因不明 / 罕見</span>
+          <div class="sound-video">
+            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=195" loading="lazy" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😊</div>
+          <div><h3>Chutting（嚅嚅聲）</h3><div class="sound-en">Chutting</div></div>
+        </div>
+        <div class="sound-body">
+          <p>短促的「嘟嘟嘟」連續聲，類似咕嚕聲但節奏更快更短。通常在安全環境中探索時發出，代表牠正在開心地四處逛逛、心情很好。</p>
+          <span class="sound-mood mood-happy">😊 開心探索</span>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😾</div>
+          <div><h3>Hissing（嘶聲）</h3><div class="sound-en">Hissing</div></div>
+        </div>
+        <div class="sound-body">
+          <p>像蛇的嘶嘶聲，表示天竺鼠正在不爽、想要被留獨處。如果持續打擾，下一步可能就是咬人了。尊重牠的空間，等牠冷靜下來再互動。</p>
+          <span class="sound-mood mood-warn">⚠️ 煩躁 / 不想被打擾</span>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😢</div>
+          <div><h3>Whining（哀鳴聲）</h3><div class="sound-en">Whining</div></div>
+        </div>
+        <div class="sound-body">
+          <p>高音調的持續呻吟聲，表達不滿或不舒服。可能是被打擾、不喜歡某件事，或是感到身體不適。如果頻繁出現且無明顯原因，建議帶去看獸醫檢查。</p>
+          <span class="sound-mood mood-warn">⚠️ 不滿 / 可能不適</span>
+        </div>
+      </div>
+
+      <div class="sound-card">
+        <div class="sound-header">
+          <div class="sound-icon">😱</div>
+          <div><h3>Shrieking（尖叫聲）</h3><div class="sound-en">Shrieking / Screaming</div></div>
+        </div>
+        <div class="sound-body">
+          <p>刺耳的高分貝尖叫，代表極度恐懼或疼痛。照顧良好的天竺鼠很少會發出這種聲音。如果聽到，請立即檢查牠是否受傷或受到驚嚇。</p>
+          <span class="sound-mood mood-danger">🚨 恐懼 / 疼痛</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sound-sources">
+      <strong>資料來源：</strong><br>
+      <a href="https://thevetdesk.com/pet-behavior/guinea-pigs/guinea-pig-sounds/" target="_blank" rel="noopener">The Vet Desk — 9 Vet-Verified Guinea Pig Sounds and Their Meanings</a>（原 PetKeen）<br>
+      <a href="https://mgpr.org/newsite/GP_Info/Guinea%20Pig%20Sounds.htm" target="_blank" rel="noopener">Metropolitan Guinea Pig Rescue — Guinea Pig Sounds</a><br>
+      <a href="https://pubmed.ncbi.nlm.nih.gov/961122/" target="_blank" rel="noopener">Berryman (1976) Guinea-pig Vocalizations: Their Structure, Causation and Function</a>
+    </div>
+  </div>
+
+  <!-- Tab 5: 小遊戲 -->
+  <div class="tab-content" id="tab-game">
+    <div class="game-wrapper">
+      <div class="game-canvas-wrap">
+        <canvas class="game-canvas" id="gameCanvas"></canvas>
+        <div class="game-hud" id="gameHud" style="display:none;">
+          <div class="hearts" id="gameHearts">❤️❤️❤️❤️❤️</div>
+          <div style="font-size:16px">⚡</div>
+          <div class="stamina-wrap"><div class="stamina-bar" id="gameStamina"></div></div>
+          <div class="score-display" id="gameScore">🏆 0</div>
+        </div>
+        <div class="game-overlay" id="gameStart">
+          <h2>🐹 天竺鼠覓食大冒險</h2>
+          <div class="subtitle">幫天竺鼠找到正確的食物！</div>
+          <div class="instructions">
+            🌾 <b>正確食物</b>：補充體力＋微量恢復生命<br>
+            💊 <b>保健品</b>：恢復生命（不補體力）<br>
+            🍞 <b>錯誤食物</b>：補體力但扣生命＋降速<br>
+            🍫 <b>劇毒食物</b>：不補體力、扣雙倍生命＋降速<br>
+            ⚡ 體力持續下降，過低會消耗生命<br>
+            🎮 方向鍵 / WASD / 螢幕搖桿
+          </div>
+          <button class="game-start-btn" id="btnStart">開始遊戲</button>
+          <div class="game-mobile-hint">👆 用下方搖桿控制天竺鼠移動</div>
+        </div>
+        <div class="game-overlay hidden" id="gameOver">
+          <h2>💫 遊戲結束</h2>
+          <div class="final-score" id="finalScore">🏆 0</div>
+          <button class="game-start-btn" id="btnRestart">再玩一次</button>
+        </div>
+      </div>
+      <div class="game-controls-row">
+        <div class="joystick-zone" id="joystickZone">
+          <div class="joystick-thumb" id="joystickThumb"></div>
+        </div>
+        <div class="game-eat-log">
+          <div class="eat-log-title">📋 進食紀錄</div>
+          <ul class="eat-log-list" id="eatLogList">
+            <li class="eat-log-empty">還沒吃到任何東西</li>
+          </ul>
+        </div>
+      </div>
+      <div class="game-legend">
+        <div class="game-legend-item">🌾🫑🥬 正確食物：補體力＋微量生命</div>
+        <div class="game-legend-item">💊🧪 保健品：補生命</div>
+        <div class="game-legend-item">🍞🥑🥔 錯誤食物：補體力但扣1心</div>
+        <div class="game-legend-item">🍫🧅 劇毒食物：不補體力、扣2心</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">🐹 用愛守護每一隻小天竺鼠</div>
+</div>
+
+<script>
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+</script>
+<script>
+(function(){
+  const canvas = document.getElementById('gameCanvas');
+  const ctx = canvas.getContext('2d');
+  const W = 800, H = 500;
+  canvas.width = W; canvas.height = H;
+
+  const CFG = {
+    staminaDrain: 3, lowStamina: 30, lowLifeDrain: 2,
+    lowSpeedMult: 0.55, badSpeedMult: 0.35, badDebuffDur: 3,
+    baseSpeed: 220, spawnInterval: 1600, maxItems: 12,
+    collectR: 34, playerSize: 42, itemSize: 34
+  };
+
+  const GOOD = [
+    {e:'🌾',n:'提摩西草',st:20,li:3,sc:10,w:25,tip:'主食！需無限量供應來磨牙'},
+    {e:'🫑',n:'甜椒',st:25,li:5,sc:15,w:15,tip:'維生素C之王！每日可給'},
+    {e:'🥬',n:'生菜',st:15,li:3,sc:10,w:15,tip:'選蘿蔓生菜，別選冰山生菜'},
+    {e:'🥒',n:'小黃瓜',st:18,li:2,sc:10,w:12,tip:'水分多，夏天適量補水'},
+    {e:'🥕',n:'紅蘿蔔',st:22,li:4,sc:12,w:12,tip:'糖分高，當點心少量給'},
+    {e:'🥦',n:'花椰菜',st:20,li:5,sc:12,w:10,tip:'富含維C，但吃多易脹氣'},
+    {e:'🍎',n:'蘋果',st:15,li:3,sc:15,w:8,tip:'記得去籽！籽含氰化物'},
+    {e:'🍓',n:'草莓',st:12,li:3,sc:12,w:5,tip:'糖分高，偶爾當獎勵'}
+  ];
+  const SUPP = [
+    {e:'💊',n:'維他命C',st:0,li:25,sc:20,w:5,tip:'天竺鼠無法自行合成維C！'},
+    {e:'🧪',n:'益生菌',st:0,li:20,sc:20,w:3,tip:'幫助腸道菌群健康'}
+  ];
+  const BAD = [
+    {e:'🍫',n:'巧克力',st:0,li:-40,w:8,tip:'含可可鹼，劇毒！'},
+    {e:'🧅',n:'洋蔥',st:0,li:-40,w:6,tip:'破壞紅血球，可致命！'},
+    {e:'🥔',n:'馬鈴薯',st:10,li:-20,w:8,tip:'含龍葵鹼，生食有毒'},
+    {e:'🥑',n:'酪梨',st:12,li:-20,w:6,tip:'含persin，天竺鼠不能代謝'},
+    {e:'🍬',n:'糖果',st:8,li:-20,w:10,tip:'糖鹽添加物通通不行'},
+    {e:'🍞',n:'麵包',st:15,li:-20,w:10,tip:'穀物難消化，容易脹氣'}
+  ];
+
+  let S, keys={}, touchDir={x:0,y:0}, touchOn=false, animId=null, lt=0, spawnT=0, floats=[], startT=0, gameTabActive=false, eatLog=[];
+
+  function wRand(arr){
+    let tot=arr.reduce((s,i)=>s+i.w,0), r=Math.random()*tot;
+    for(const i of arr){r-=i.w;if(r<=0)return i;}
+    return arr[arr.length-1];
+  }
+
+  function initS(){
+    return {life:100,stamina:100,score:0,px:W/2,py:H/2,items:[],debuff:0,shake:0,running:false};
+  }
+
+  function getSpd(){
+    let s=CFG.baseSpeed;
+    const elapsed=(performance.now()-startT)/1000;
+    s+=Math.min(elapsed/60*30,60);
+    if(S.stamina<CFG.lowStamina) s*=CFG.lowSpeedMult;
+    if(S.debuff>0) s*=CFG.badSpeedMult;
+    return s;
+  }
+
+  function spawn(){
+    if(S.items.length>=CFG.maxItems)return;
+    const elapsed=(performance.now()-startT)/1000;
+    const badChance=Math.min(0.45,0.3+elapsed/300);
+    const suppChance=0.08;
+    const r=Math.random();
+    let cat,it;
+    if(r<suppChance){cat='s';it=wRand(SUPP);}
+    else if(r<suppChance+badChance){cat='b';it=wRand(BAD);}
+    else{cat='g';it=wRand(GOOD);}
+    const mx=50,yTop=70,yBot=30;
+    S.items.push({...it,cat,x:mx+Math.random()*(W-mx*2),y:yTop+Math.random()*(H-yTop-yBot),age:0,maxAge:7+Math.random()*5});
+  }
+
+  function addFloat(x,y,t,c,dur){floats.push({x,y,t,c,age:0,dur:dur||1.2});}
+
+  function collect(i){
+    const it=S.items[i];
+    let effect='';
+    if(it.cat==='g'){
+      S.stamina=Math.min(100,S.stamina+it.st);
+      S.life=Math.min(100,S.life+it.li);
+      S.score+=it.sc;
+      addFloat(it.x,it.y-15,'+'+it.st+'⚡','#5E8C4A');
+      addFloat(it.x,it.y+12,it.tip,'#7A4E2E',2);
+      effect='+'+it.st+'⚡ +'+it.li+'❤️';
+    }else if(it.cat==='s'){
+      S.life=Math.min(100,S.life+it.li);
+      S.score+=it.sc;
+      addFloat(it.x,it.y-15,'+'+it.li+'❤️','#4E7AB0');
+      addFloat(it.x,it.y+12,it.tip,'#4E7AB0',2);
+      effect='+'+it.li+'❤️';
+    }else{
+      if(it.st>0) S.stamina=Math.min(100,S.stamina+it.st);
+      S.life=Math.max(0,S.life+it.li);
+      S.debuff=CFG.badDebuffDur;
+      S.shake=0.3;
+      const hearts=Math.round(Math.abs(it.li)/20);
+      if(it.st>0){
+        addFloat(it.x,it.y-20,'+'+it.st+'⚡ -'+hearts+'❤️','#C05040');
+        addFloat(it.x,it.y+8,it.tip,'#C05040',2.5);
+        effect='+'+it.st+'⚡ -'+hearts+'❤️ 降速';
+      }else{
+        addFloat(it.x,it.y-15,'劇毒! -'+hearts+'❤️','#C05040');
+        addFloat(it.x,it.y+8,it.tip,'#C05040',2.5);
+        effect='劇毒! -'+hearts+'❤️ 降速';
+      }
+    }
+    eatLog.unshift({e:it.e,n:it.n,cat:it.cat,effect,tip:it.tip});
+    if(eatLog.length>30)eatLog.pop();
+    updateLog();
+    S.items.splice(i,1);
+  }
+
+  function updateLog(){
+    const ul=document.getElementById('eatLogList');
+    if(!eatLog.length){ul.innerHTML='<li class="eat-log-empty">還沒吃到任何東西</li>';return;}
+    ul.innerHTML=eatLog.map(l=>{
+      const cls=l.cat==='g'?'eat-log-good':l.cat==='s'?'eat-log-sup':'eat-log-bad';
+      return '<li class="'+cls+'">'+l.e+' '+l.n+' '+l.effect+'<br><span style="font-size:11px;color:#7A4E2E;font-weight:400">'+l.tip+'</span></li>';
+    }).join('');
+  }
+
+  function update(dt){
+    if(!S.running)return;
+    let dx=0,dy=0;
+    if(keys.ArrowLeft||keys.KeyA)dx-=1;
+    if(keys.ArrowRight||keys.KeyD)dx+=1;
+    if(keys.ArrowUp||keys.KeyW)dy-=1;
+    if(keys.ArrowDown||keys.KeyS)dy+=1;
+    if(touchOn){dx=touchDir.x;dy=touchDir.y;}
+    const len=Math.sqrt(dx*dx+dy*dy);
+    if(len>0){dx/=len;dy/=len;}
+    const spd=getSpd()*dt;
+    S.px=Math.max(22,Math.min(W-22,S.px+dx*spd));
+    S.py=Math.max(55,Math.min(H-22,S.py+dy*spd));
+
+    const elapsed=(performance.now()-startT)/1000;
+    const drainMult=1+Math.min(elapsed/120,1.5);
+    S.stamina=Math.max(0,S.stamina-CFG.staminaDrain*drainMult*dt);
+    if(S.stamina<CFG.lowStamina) S.life=Math.max(0,S.life-CFG.lowLifeDrain*dt);
+    if(S.debuff>0) S.debuff=Math.max(0,S.debuff-dt);
+    if(S.shake>0) S.shake=Math.max(0,S.shake-dt);
+
+    for(let i=S.items.length-1;i>=0;i--){
+      const it=S.items[i];
+      const d=Math.sqrt((it.x-S.px)**2+(it.y-S.py)**2);
+      if(d<CFG.collectR&&it.age>1.8){collect(i);continue;}
+      it.age+=dt;
+      if(it.age>it.maxAge)S.items.splice(i,1);
+    }
+    for(let i=floats.length-1;i>=0;i--){
+      floats[i].age+=dt;
+      if(floats[i].age>floats[i].dur)floats.splice(i,1);
+    }
+    if(S.life<=0){S.life=0;S.running=false;showOver();}
+    spawnT+=dt*1000;
+    const interval=Math.max(800,CFG.spawnInterval-elapsed*3);
+    if(spawnT>interval){spawnT=0;spawn();}
+    updateHUD();
+  }
+
+  const grassDots=[];
+  for(let i=0;i<50;i++) grassDots.push({x:(i*73+17)%W,y:(i*59+31)%H,r:2+(i%4)});
+
+  function drawField(){
+    ctx.fillStyle='#B5D89C';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#A4CC88';
+    for(const g of grassDots){ctx.beginPath();ctx.arc(g.x,g.y,g.r,0,Math.PI*2);ctx.fill();}
+    if(S&&S.stamina<CFG.lowStamina){
+      const a=0.3+0.15*Math.sin(Date.now()/300);
+      ctx.strokeStyle='rgba(220,60,40,'+a+')';ctx.lineWidth=6;
+      ctx.strokeRect(3,3,W-6,H-6);ctx.lineWidth=1;
+    }
+  }
+
+  function drawItems(){
+    for(const it of S.items){
+      const fi=Math.min(1,it.age/2.0);
+      const fo=it.age>it.maxAge-2?(it.maxAge-it.age)/2:1;
+      ctx.globalAlpha=fi*Math.max(0,fo);
+      ctx.font=CFG.itemSize+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+      const bounce=Math.sin(it.age*3)*3;
+      let shX=0,shY=0;
+      if(it.age>it.maxAge-2){const k=(1-(it.maxAge-it.age)/2)*5;shX=Math.sin(it.age*30)*k;shY=Math.cos(it.age*25)*k;}
+      if(it.cat==='s'){ctx.shadowColor='#4E7AB0';ctx.shadowBlur=10+Math.sin(it.age*4)*4;}
+      else if(it.cat==='b'){ctx.shadowColor='#C05040';ctx.shadowBlur=8;}
+      else{ctx.shadowColor='transparent';ctx.shadowBlur=0;}
+      ctx.fillText(it.e,it.x+shX,it.y+bounce+shY);
+      ctx.shadowBlur=0;ctx.globalAlpha=1;
+    }
+  }
+
+  function drawPlayer(){
+    ctx.font=CFG.playerSize+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.globalAlpha=0.18;ctx.fillStyle='#000';
+    ctx.beginPath();ctx.ellipse(S.px,S.py+CFG.playerSize*0.35,18,6,0,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
+    if(S.debuff>0&&Math.floor(Date.now()/200)%2) ctx.globalAlpha=0.65;
+    ctx.fillText('🐹',S.px,S.py);ctx.globalAlpha=1;
+    if(S.debuff>0){ctx.font='16px serif';ctx.fillText('🤢',S.px+20,S.py-20);}
+    else if(S.stamina<CFG.lowStamina&&S.stamina>0){ctx.font='16px serif';ctx.fillText('💦',S.px+20,S.py-20);}
+  }
+
+  function drawFloats(){
+    for(const f of floats){
+      const p=f.age/f.dur;
+      ctx.globalAlpha=1-p;ctx.font='bold 15px "Noto Sans TC",sans-serif';
+      ctx.textAlign='center';ctx.fillStyle=f.c;
+      ctx.shadowColor='#FFF';ctx.shadowBlur=3;
+      ctx.fillText(f.t,f.x,f.y-p*40);
+      ctx.shadowBlur=0;ctx.globalAlpha=1;
+    }
+  }
+
+  function drawBg(){
+    ctx.fillStyle='#B5D89C';ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#A4CC88';
+    for(const g of grassDots){ctx.beginPath();ctx.arc(g.x,g.y,g.r,0,Math.PI*2);ctx.fill();}
+    ctx.globalAlpha=0.25;ctx.font='40px serif';ctx.textAlign='center';
+    const deco=['🌾','🫑','🥬','🥕','🍎','💊','🐹'];
+    for(let i=0;i<7;i++) ctx.fillText(deco[i],70+i*110,180+(i%2)*160);
+    ctx.globalAlpha=1;
+  }
+
+  function render(){
+    ctx.save();
+    if(S&&S.shake>0){
+      const k=S.shake*12;
+      ctx.translate((Math.random()-.5)*k,(Math.random()-.5)*k);
+    }
+    if(S&&S.running){drawField();drawItems();drawPlayer();drawFloats();}
+    else drawBg();
+    ctx.restore();
+  }
+
+  function updateHUD(){
+    const h=Math.ceil(S.life/20);
+    document.getElementById('gameHearts').textContent='❤️'.repeat(h)+'🖤'.repeat(5-h);
+    const bar=document.getElementById('gameStamina');
+    bar.style.width=S.stamina+'%';
+    bar.className='stamina-bar'+(S.stamina<CFG.lowStamina?' low':'');
+    document.getElementById('gameScore').textContent='🏆 '+S.score;
+  }
+
+  function loop(ts){
+    if(!gameTabActive)return;
+    const dt=Math.min(0.1,(ts-lt)/1000);lt=ts;
+    if(S&&S.running) update(dt);
+    render();
+    animId=requestAnimationFrame(loop);
+  }
+
+  function startGame(){
+    S=initS();S.running=true;floats=[];eatLog=[];spawnT=0;startT=performance.now();
+    for(let i=0;i<5;i++)spawn();
+    document.getElementById('gameStart').classList.add('hidden');
+    document.getElementById('gameOver').classList.add('hidden');
+    document.getElementById('gameHud').style.display='flex';
+    updateHUD();updateLog();lt=performance.now();
+    if(!animId) animId=requestAnimationFrame(loop);
+  }
+
+  function showOver(){
+    document.getElementById('gameOver').classList.remove('hidden');
+    document.getElementById('finalScore').textContent='🏆 '+S.score;
+    document.getElementById('gameHud').style.display='none';
+  }
+
+  document.addEventListener('keydown',e=>{
+    keys[e.code]=true;
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();
+  });
+  document.addEventListener('keyup',e=>{keys[e.code]=false;});
+
+  // Joystick (mobile)
+  const jZone=document.getElementById('joystickZone');
+  const jThumb=document.getElementById('joystickThumb');
+  const jMaxR=39;
+  function jHandle(e){
+    e.preventDefault();if(!S||!S.running)return;
+    const r=jZone.getBoundingClientRect();
+    const cx=r.left+r.width/2,cy=r.top+r.height/2;
+    const t=e.touches[0];
+    let dx=t.clientX-cx,dy=t.clientY-cy;
+    const dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist>jMaxR){dx=dx/dist*jMaxR;dy=dy/dist*jMaxR;}
+    jThumb.style.transform='translate(calc(-50% + '+dx+'px),calc(-50% + '+dy+'px))';
+    if(dist>8){touchDir.x=dx/jMaxR;touchDir.y=dy/jMaxR;touchOn=true;}
+    else touchOn=false;
+  }
+  function jEnd(){touchOn=false;jThumb.style.transform='translate(-50%,-50%)';}
+  jZone.addEventListener('touchstart',jHandle,{passive:false});
+  jZone.addEventListener('touchmove',jHandle,{passive:false});
+  jZone.addEventListener('touchend',jEnd);
+  jZone.addEventListener('touchcancel',jEnd);
+
+  let mouseD=false;
+  function mouseH(e){
+    if(!S||!S.running)return;
+    const r=canvas.getBoundingClientRect(),sx=W/r.width,sy=H/r.height;
+    const mx=(e.clientX-r.left)*sx,my=(e.clientY-r.top)*sy;
+    let dx=mx-S.px,dy=my-S.py;const l=Math.sqrt(dx*dx+dy*dy);
+    if(l>10){touchDir.x=dx/l;touchDir.y=dy/l;touchOn=true;}
+  }
+  canvas.addEventListener('mousedown',e=>{mouseD=true;mouseH(e);});
+  canvas.addEventListener('mousemove',e=>{if(mouseD)mouseH(e);});
+  canvas.addEventListener('mouseup',()=>{mouseD=false;touchOn=false;});
+  canvas.addEventListener('mouseleave',()=>{mouseD=false;touchOn=false;});
+
+  document.getElementById('btnStart').addEventListener('click',startGame);
+  document.getElementById('btnRestart').addEventListener('click',startGame);
+
+  drawBg();
+
+  const origTabClick=document.querySelectorAll('.tab-btn');
+  function checkGameTab(){
+    const wasActive=gameTabActive;
+    gameTabActive=document.getElementById('tab-game').classList.contains('active');
+    if(gameTabActive&&!wasActive){lt=performance.now();animId=requestAnimationFrame(loop);}
+    if(!gameTabActive&&wasActive){if(animId){cancelAnimationFrame(animId);animId=null;}}
+  }
+  origTabClick.forEach(b=>b.addEventListener('click',()=>setTimeout(checkGameTab,10)));
+
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden&&gameTabActive&&S&&S.running){lt=performance.now();if(!animId)animId=requestAnimationFrame(loop);}
+  });
+})();
+</script>
+</body>
+</html>
