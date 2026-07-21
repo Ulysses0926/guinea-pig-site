@@ -3,12 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>天竺鼠小百科</title>
+<meta name="description" content="天竺鼠飼養入門百科：12 種品種介紹、生活習慣、可吃與不可吃的飲食指南、9 種叫聲圖鑑，還有覓食小遊戲，適合新手飼主。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="天竺鼠小百科｜品種介紹・飲食指南・叫聲圖鑑">
+<meta property="og:description" content="天竺鼠飼養入門百科：品種、飲食、叫聲與覓食小遊戲。">
+<meta property="og:url" content="https://guinea-pig.pages.dev/">
+<meta property="og:image" content="https://guinea-pig.pages.dev/img/american.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<title>天竺鼠小百科｜品種介紹・飲食指南・叫聲圖鑑</title>
+<link rel="canonical" href="https://guinea-pig.pages.dev/">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐹</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
   body { font-family: 'Noto Sans TC', sans-serif; color: #5C4434;
          line-height: 1.7; min-height: 100vh;
          background: radial-gradient(1200px 600px at 50% -200px, #FFE8CF 0%, #FFF4E8 55%, #FFF8F0 100%); }
@@ -20,7 +31,7 @@
                font-size: 42px; font-weight: 800; color: #7A4E2E; }
   .header .hero-emoji { font-size: 76px; display: block; margin-bottom: 4px;
                     filter: drop-shadow(0 8px 14px rgba(180,120,70,.25)); }
-  .header p { color: #B08454; font-size: 18px; font-weight: 500; margin-top: 8px; }
+  .header p { color: #8A6238; font-size: 18px; font-weight: 500; margin-top: 8px; }
 
   /* Tabs */
   .tabs { position: sticky; top: 0; z-index: 20; display: flex; justify-content: center;
@@ -30,14 +41,16 @@
                border-radius: 999px; box-shadow: 0 10px 30px rgba(180,120,70,.16), inset 0 0 0 1px rgba(180,120,70,.06); }
   .tab-btn { border: none; cursor: pointer; font-size: 15.5px; font-weight: 700;
              padding: 11px 24px; border-radius: 999px; transition: all 0.2s ease;
-             background: transparent; color: #A87C4E; font-family: 'Noto Sans TC', sans-serif; }
-  .tab-btn.active { background: linear-gradient(120deg, #FFB872, #F59E54); color: #FFFFFF;
+             background: transparent; color: #7A4E2E; font-family: 'Noto Sans TC', sans-serif; }
+  .tab-btn.active { background: linear-gradient(120deg, #FFB872, #F59E54); color: #5C3413;
                     box-shadow: 0 8px 18px rgba(230,140,60,.35); }
   .tab-btn:not(.active):hover { color: #7A4E2E; background: rgba(255,184,114,0.12); }
 
   /* Tab content */
   .tab-content { display: none; animation: fadeIn 0.35s ease; }
   .tab-content.active { display: block; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+             overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
   /* Breed cards */
@@ -51,7 +64,7 @@
   .breed-body { padding: 18px 20px 20px; }
   .breed-name { font-size: 21px; font-weight: 900; color: #7A4E2E; margin-bottom: 2px; }
   .breed-eng { font-family: 'Baloo 2', sans-serif; font-size: 14px; font-weight: 600;
-               color: #D69A5E; margin-bottom: 8px; }
+               color: #A9682F; margin-bottom: 8px; }
   .breed-desc { font-size: 14.5px; line-height: 1.7; color: #6B5240; }
   .breed-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
   .breed-tag { font-size: 12.5px; font-weight: 700; padding: 5px 12px; border-radius: 999px;
@@ -94,7 +107,7 @@
   .diet-item .emoji { font-size: 24px; flex-shrink: 0; }
   .diet-item .info { flex: 1; }
   .diet-item .name { font-weight: 700; color: #7A4E2E; }
-  .diet-item .note { font-size: 12.5px; color: #B08454; }
+  .diet-item .note { font-size: 12.5px; color: #8A6238; }
   .diet-tip { background: linear-gradient(120deg, #FFE5C7, #FFD8AE); border-radius: 26px;
               padding: 26px 30px; font-size: 15px; color: #6B5240; margin-top: 20px;
               box-shadow: 0 14px 34px rgba(180,120,70,.16); }
@@ -118,7 +131,7 @@
   .sound-card:nth-child(8) .sound-header { background: linear-gradient(120deg, #E4EEF6, #D2E2F0); }
   .sound-card:nth-child(9) .sound-header { background: linear-gradient(120deg, #FCE6E0, #F8D5CB); }
   .sound-card h3 { font-size: 18px; font-weight: 800; color: #7A4E2E; }
-  .sound-card .sound-en { font-family: 'Baloo 2', sans-serif; font-size: 13px; font-weight: 600; color: #D69A5E; }
+  .sound-card .sound-en { font-family: 'Baloo 2', sans-serif; font-size: 13px; font-weight: 600; color: #A9682F; }
   .sound-body { padding: 16px 24px 20px; }
   .sound-body p { font-size: 14.5px; line-height: 1.7; color: #6B5240; }
   .sound-mood { display: inline-block; font-size: 12.5px; font-weight: 700; padding: 5px 12px;
@@ -131,9 +144,9 @@
   .sound-video iframe { width: 100%; height: 100%; border: none; }
   .sound-sources { margin-top: 28px; padding: 20px 24px; background: #FFFFFF; border-radius: 26px;
                    box-shadow: 0 14px 34px rgba(180,120,70,.13); border: 1px solid rgba(180,120,70,.07);
-                   font-size: 13px; color: #B08454; line-height: 1.8; }
+                   font-size: 13px; color: #8A6238; line-height: 1.8; }
   .sound-sources strong { color: #7A4E2E; }
-  .sound-sources a { color: #C75D3C; text-decoration: none; }
+  .sound-sources a { display: block; padding: 8px 0; color: #C75D3C; text-decoration: none; }
   .sound-sources a:hover { text-decoration: underline; }
 
   /* Game */
@@ -141,7 +154,7 @@
   .game-canvas-wrap { position: relative; display: inline-block; width: 100%; max-width: 800px; }
   .game-canvas { width: 100%; display: block; border-radius: 20px;
                  box-shadow: 0 14px 34px rgba(180,120,70,.18); border: 3px solid rgba(180,120,70,.12);
-                 touch-action: none; background: #B5D89C; }
+                 background: #B5D89C; }
   .game-hud { position: absolute; top: 0; left: 0; right: 0; padding: 12px 16px;
               display: flex; align-items: center; gap: 12px; pointer-events: none;
               font-family: 'Baloo 2', sans-serif; font-weight: 700; color: #FFF;
@@ -158,16 +171,17 @@
                   border-radius: 20px; z-index: 5; }
   .game-overlay.hidden { display: none; }
   .game-overlay h2 { font-family: 'Baloo 2', sans-serif; font-size: 34px; color: #7A4E2E; margin-bottom: 4px; }
-  .game-overlay .subtitle { font-size: 16px; color: #B08454; margin-bottom: 16px; }
+  .game-overlay .subtitle { font-size: 16px; color: #8A6238; margin-bottom: 16px; }
   .game-overlay .final-score { font-family: 'Baloo 2', sans-serif; font-size: 28px; color: #D68A3C; margin-bottom: 20px; }
   .game-overlay .instructions { font-size: 14px; color: #6B5240; line-height: 2; margin-bottom: 20px; max-width: 360px; text-align: left; }
   .game-start-btn { border: none; cursor: pointer; font-family: 'Noto Sans TC', sans-serif;
                     font-size: 18px; font-weight: 700; padding: 14px 40px; border-radius: 999px;
-                    background: linear-gradient(120deg, #FFB872, #F59E54); color: #FFF;
+                    background: linear-gradient(120deg, #FFB872, #F59E54); color: #5C3413;
                     box-shadow: 0 8px 20px rgba(230,140,60,.4); transition: transform 0.15s; }
+  .tab-btn, .game-start-btn, .diet-tip[onclick] { touch-action: manipulation; }
   .game-start-btn:hover { transform: scale(1.05); }
   .game-start-btn:active { transform: scale(0.97); }
-  .game-mobile-hint { font-size: 13px; color: #B08454; margin-top: 12px; display: none; }
+  .game-mobile-hint { font-size: 13px; color: #8A6238; margin-top: 12px; display: none; }
   @media (pointer: coarse) { .game-mobile-hint { display: block; } }
   .game-legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
                  margin-top: 16px; max-width: 800px; margin-left: auto; margin-right: auto; }
@@ -191,27 +205,30 @@
                   max-height: 150px; overflow-y: auto; }
   .eat-log-title { font-size: 13px; font-weight: 700; color: #7A4E2E; margin-bottom: 6px; }
   .eat-log-list { list-style: none; padding: 0; margin: 0; }
-  .eat-log-list li { font-size: 12.5px; color: #6B5240; padding: 3px 0;
+  .eat-log-list li { font-size: 13px; color: #6B5240; padding: 3px 0;
                      border-bottom: 1px dashed rgba(180,120,70,.1); }
   .eat-log-list li:last-child { border-bottom: none; }
   .eat-log-good { color: #5E8C4A !important; }
   .eat-log-sup { color: #4E7AB0 !important; }
   .eat-log-bad { color: #C05040 !important; }
-  .eat-log-empty { font-size: 12px; color: #B08454; font-style: italic; }
+  .eat-log-empty { font-size: 12px; color: #8A6238; font-style: italic; }
 
   /* Footer */
-  .footer { text-align: center; padding: 32px 0 12px; font-size: 14px; font-weight: 600; color: #B89066; }
+  .footer { text-align: center; padding: 32px 0 12px; font-size: 14px; font-weight: 600; color: #8A6238; }
 
   @media (max-width: 500px) {
     .header h1 { font-size: 32px; }
     .header .hero-emoji { font-size: 56px; }
     .tabs { padding: 12px 8px; }
-    .tab-group { flex-wrap: wrap; gap: 5px; padding: 6px; }
-    .tab-btn { font-size: 13px; padding: 8px 12px; }
+    .tab-group { flex-wrap: wrap; gap: 5px; padding: 5px; }
+    .tab-btn { font-size: 13px; padding: 12px 14px; min-height: 44px; }
     .breed-grid { grid-template-columns: 1fr; }
     .diet-grid { grid-template-columns: 1fr 1fr; }
     .sound-grid { grid-template-columns: 1fr; }
     .game-canvas-wrap { overflow: visible; }
+    .game-hud { padding: 6px 10px; gap: 6px; font-size: 13px; }
+    .game-hud .hearts { font-size: 14px; }
+    .game-hud .stamina-wrap { height: 12px; }
     .game-overlay { justify-content: flex-start; padding: 16px 20px; bottom: auto; min-height: 100%; }
     .game-overlay h2 { font-size: 22px; margin-bottom: 2px; }
     .game-overlay .subtitle { font-size: 14px; margin-bottom: 10px; }
@@ -220,34 +237,36 @@
     .game-mobile-hint { font-size: 12px; margin-top: 8px; }
     .game-overlay .final-score { font-size: 24px; margin-bottom: 14px; }
     .game-legend { gap: 6px; }
-    .game-legend-item { font-size: 12px; padding: 5px 10px; }
+    .game-legend-item { padding: 5px 10px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
-  <div class="header">
+  <header class="header">
     <h1><span class="hero-emoji">🐹</span>天竺鼠小百科</h1>
     <p>認識這些圓滾滾的小可愛</p>
-  </div>
+  </header>
 
-  <div class="tabs">
-    <div class="tab-group">
-      <button class="tab-btn active" data-tab="breeds">品種介紹</button>
-      <button class="tab-btn" data-tab="habits">生活習慣</button>
-      <button class="tab-btn" data-tab="diet">飲食指南</button>
-      <button class="tab-btn" data-tab="sounds">叫聲圖鑑</button>
-      <button class="tab-btn" data-tab="game" id="tabGameBtn" style="display:none">🎮 小遊戲</button>
+  <nav class="tabs" aria-label="百科分類">
+    <div class="tab-group" role="tablist">
+      <button class="tab-btn active" id="tabBreedsBtn" data-tab="breeds" role="tab" aria-controls="tab-breeds" aria-selected="true">品種介紹</button>
+      <button class="tab-btn" id="tabHabitsBtn" data-tab="habits" role="tab" aria-controls="tab-habits" aria-selected="false">生活習慣</button>
+      <button class="tab-btn" id="tabDietBtn" data-tab="diet" role="tab" aria-controls="tab-diet" aria-selected="false">飲食指南</button>
+      <button class="tab-btn" id="tabSoundsBtn" data-tab="sounds" role="tab" aria-controls="tab-sounds" aria-selected="false">叫聲圖鑑</button>
+      <button class="tab-btn" data-tab="game" id="tabGameBtn" role="tab" aria-controls="tab-game" aria-selected="false">🎮 小遊戲</button>
     </div>
-  </div>
+  </nav>
 
+  <main>
   <!-- Tab 1: 品種介紹 -->
-  <div class="tab-content active" id="tab-breeds">
+  <div class="tab-content active" id="tab-breeds" role="tabpanel" aria-labelledby="tabBreedsBtn">
+    <h2 class="sr-only">品種介紹</h2>
     <div class="breed-grid">
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/american.jpg" alt="美國短毛天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">美國短毛 / 英國短毛</div>
+        <h3 class="breed-name">美國短毛 / 英國短毛</h3>
         <div class="breed-eng">American / English</div>
         <div class="breed-desc">最常見的品種，毛短而滑順，性格溫馴親人，非常適合新手飼主。體型圓潤，各種毛色都有。美國協會稱 American，英國協會稱 English，其實是同一品種。</div>
         <div class="breed-tags"><span class="breed-tag">新手推薦</span><span class="breed-tag">好照顧</span></div>
@@ -256,7 +275,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/abyssinian.jpg" alt="阿比西尼亞天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">阿比西尼亞</div>
+        <h3 class="breed-name">阿比西尼亞</h3>
         <div class="breed-eng">Abyssinian</div>
         <div class="breed-desc">全身佈滿「玫瑰花結」般的毛旋，毛質粗硬蓬鬆。個性活潑好動、好奇心強，像小小探險家。</div>
         <div class="breed-tags"><span class="breed-tag">活潑好動</span><span class="breed-tag">毛旋特徵</span></div>
@@ -265,7 +284,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/peruvian.jpg" alt="秘魯天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">秘魯天竺鼠</div>
+        <h3 class="breed-name">秘魯天竺鼠</h3>
         <div class="breed-eng">Peruvian</div>
         <div class="breed-desc">擁有超長直毛，可長達 30 公分以上，像披著絲綢斗篷。需要定期梳理，適合有經驗的飼主。</div>
         <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">需勤梳理</span></div>
@@ -274,7 +293,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/silkie.jpg" alt="雪特蘭天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">雪特蘭</div>
+        <h3 class="breed-name">雪特蘭</h3>
         <div class="breed-eng">Silkie / Sheltie</div>
         <div class="breed-desc">長毛從頭部向後流瀉，像一頭柔順長髮。毛質絲滑柔軟，性格溫和害羞，喜歡安靜的環境。</div>
         <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">溫和害羞</span></div>
@@ -283,7 +302,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/teddy.jpg" alt="泰迪天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">泰迪</div>
+        <h3 class="breed-name">泰迪</h3>
         <div class="breed-eng">Teddy</div>
         <div class="breed-desc">毛質密實有彈性，摸起來像絨毛玩具。鼻子較寬，整體圓潤可愛。性格友善，喜歡被撫摸。</div>
         <div class="breed-tags"><span class="breed-tag">絨毛觸感</span><span class="breed-tag">親人</span></div>
@@ -292,7 +311,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/texel.jpg" alt="特塞爾天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">特塞爾</div>
+        <h3 class="breed-name">特塞爾</h3>
         <div class="breed-eng">Texel</div>
         <div class="breed-desc">全身覆蓋捲曲長毛，像燙了小捲的貴賓狗。是最需要毛髮照顧的品種之一，但外型非常吸睛。</div>
         <div class="breed-tags"><span class="breed-tag">捲毛</span><span class="breed-tag">高顏值</span></div>
@@ -301,7 +320,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/coronet.jpg" alt="冠毛天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">冠毛天竺鼠</div>
+        <h3 class="breed-name">冠毛天竺鼠</h3>
         <div class="breed-eng">Coronet</div>
         <div class="breed-desc">頭頂有一個漂亮的毛冠（玫瑰花結），搭配全身長毛，像戴了皇冠的小公主。</div>
         <div class="breed-tags"><span class="breed-tag">長毛</span><span class="breed-tag">頭頂毛冠</span></div>
@@ -310,7 +329,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/crested.jpg" alt="白冠天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">白冠天竺鼠</div>
+        <h3 class="breed-name">白冠天竺鼠</h3>
         <div class="breed-eng">White Crested</div>
         <div class="breed-desc">短毛品種，額頭有一撮白色毛冠，像頂著一朵小白花。跟美國短毛一樣好照顧，辨識度很高。</div>
         <div class="breed-tags"><span class="breed-tag">短毛</span><span class="breed-tag">白色毛冠</span></div>
@@ -319,7 +338,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/rex.jpg" alt="雷克斯天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">雷克斯</div>
+        <h3 class="breed-name">雷克斯</h3>
         <div class="breed-eng">Rex</div>
         <div class="breed-desc">短而密的羊毛質感，毛直立蓬鬆，摸起來像天鵝絨。耳朵大而下垂，表情呆萌。</div>
         <div class="breed-tags"><span class="breed-tag">羊毛觸感</span><span class="breed-tag">大耳朵</span></div>
@@ -328,7 +347,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/skinny.jpg" alt="無毛天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">無毛天竺鼠</div>
+        <h3 class="breed-name">無毛天竺鼠</h3>
         <div class="breed-eng">Skinny</div>
         <div class="breed-desc">幾乎全身無毛，只有鼻子和腳上有少許毛。皮膚柔軟溫暖，需要注意保暖和防曬，適合無毛寵物愛好者。</div>
         <div class="breed-tags"><span class="breed-tag">無毛</span><span class="breed-tag">需保暖</span></div>
@@ -337,7 +356,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/californian.jpg" alt="加州天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">加州天竺鼠</div>
+        <h3 class="breed-name">加州天竺鼠</h3>
         <div class="breed-eng">Californian</div>
         <div class="breed-desc">白色短毛為主，鼻子、耳朵和腳掌有深色斑塊。眼睛為黑色，臉部毛色不會隨季節變化，與喜馬拉雅外型相似但可由眼色區分。</div>
         <div class="breed-tags"><span class="breed-tag">黑眼</span><span class="breed-tag">深色重點色</span></div>
@@ -346,7 +365,7 @@
       <div class="breed-card">
         <div class="breed-img-wrap"><img class="breed-img" src="img/himalayan.jpg" alt="喜馬拉雅天竺鼠" loading="lazy"></div>
         <div class="breed-body">
-        <div class="breed-name">喜馬拉雅天竺鼠</div>
+        <h3 class="breed-name">喜馬拉雅天竺鼠</h3>
         <div class="breed-eng">Himalayan</div>
         <div class="breed-desc">純白短毛搭配鼻子、耳朵和腳掌的深色斑塊，最大特徵是紅色眼睛。臉部深色區域會隨溫度變化：天冷時變深、天熱時變淺。</div>
         <div class="breed-tags"><span class="breed-tag">紅眼</span><span class="breed-tag">毛色隨溫度變</span></div>
@@ -356,7 +375,8 @@
   </div>
 
   <!-- Tab 2: 生活習慣 -->
-  <div class="tab-content" id="tab-habits">
+  <div class="tab-content" id="tab-habits" role="tabpanel" aria-labelledby="tabHabitsBtn">
+    <h2 class="sr-only">生活習慣</h2>
     <div class="habit-card">
       <div class="habit-header">
         <div class="habit-icon">👥</div>
@@ -412,10 +432,11 @@
   </div>
 
   <!-- Tab 3: 飲食指南 -->
-  <div class="tab-content" id="tab-diet">
-    <div class="diet-tip" style="background:linear-gradient(120deg,#E6F1DC,#D6E9C4);cursor:pointer;text-align:center" onclick="document.querySelector('[data-tab=game]').click()">
+  <div class="tab-content" id="tab-diet" role="tabpanel" aria-labelledby="tabDietBtn">
+    <h2 class="sr-only">飲食指南</h2>
+    <button class="diet-tip" style="border:none;width:100%;font:inherit;text-align:inherit;cursor:pointer;background:linear-gradient(120deg,#E6F1DC,#D6E9C4);text-align:center" onclick="document.querySelector('[data-tab=game]').click()">
       <strong>🎮 來玩覓食小遊戲！</strong>用遊戲認識天竺鼠能吃什麼、不能吃什麼 →
-    </div>
+    </button>
     <div class="diet-tip">
       <strong>飲食黃金比例：</strong>80% 提摩西草（無限量供應）＋ 15% 新鮮蔬菜 ＋ 5% 飼料顆粒。乾淨飲水隨時提供！
     </div>
@@ -462,7 +483,8 @@
   </div>
 
   <!-- Tab 4: 叫聲圖鑑 -->
-  <div class="tab-content" id="tab-sounds">
+  <div class="tab-content" id="tab-sounds" role="tabpanel" aria-labelledby="tabSoundsBtn">
+    <h2 class="sr-only">叫聲圖鑑</h2>
     <div class="sound-grid">
 
       <div class="sound-card">
@@ -474,7 +496,7 @@
           <p>高亢的長聲尖叫，像是在喊「wheeeek wheeeek」。通常在看到食物、聽到冰箱開門或飼主出現時發出。有趣的是，野生天竺鼠不會發出這種聲音——這是專門用來跟人類溝通的叫聲！</p>
           <span class="sound-mood mood-happy">😊 興奮 / 討食</span>
           <div class="sound-video">
-            <iframe src="https://www.youtube.com/embed/CGZA_GbXRks" loading="lazy" allowfullscreen></iframe>
+            <iframe title="Wheek 呼叫聲示範影片" src="https://www.youtube.com/embed/CGZA_GbXRks" loading="lazy" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -489,7 +511,7 @@
           <span class="sound-mood mood-happy">😊 滿足放鬆</span>
           <span class="sound-mood mood-warn">⚠️ 高音調＝緊張</span>
           <div class="sound-video">
-            <iframe src="https://www.youtube.com/embed/o0vhplsjmow" loading="lazy" allowfullscreen></iframe>
+            <iframe title="Purr 咕嚕聲示範影片" src="https://www.youtube.com/embed/o0vhplsjmow" loading="lazy" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -503,7 +525,7 @@
           <p>比咕嚕聲更深沉的低頻震動，通常伴隨著屁股搖擺的「求偶舞」。公鼠對母鼠發出的求愛信號，也用於宣示領地地位。看到天竺鼠邊搖屁股邊發出低沉隆隆聲，就是在「撩」了。</p>
           <span class="sound-mood mood-neutral">💕 求偶 / 宣示地位</span>
           <div class="sound-video">
-            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=65" loading="lazy" allowfullscreen></iframe>
+            <iframe title="Rumble 隆隆聲示範影片" src="https://www.youtube.com/embed/BB8j3X3UyZA?start=65" loading="lazy" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -517,7 +539,7 @@
           <p>快速的牙齒碰撞聲「喀喀喀喀」，同時會露出牙齒、身體繃緊面向威脅方向。這是明確的警告信號：「不要靠近我！」如果兩隻天竺鼠互相磨牙，最好立刻分開牠們避免打架。</p>
           <span class="sound-mood mood-danger">🚫 憤怒 / 警告</span>
           <div class="sound-video">
-            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=145" loading="lazy" allowfullscreen></iframe>
+            <iframe title="Teeth Chattering 磨牙聲示範影片" src="https://www.youtube.com/embed/BB8j3X3UyZA?start=145" loading="lazy" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -531,7 +553,7 @@
           <p>聽起來就像小鳥在叫，是天竺鼠最罕見也最神秘的叫聲。發出時牠們會進入類似恍惚的狀態，眼神放空。科學界對此仍無定論，可能與輕微壓力或特殊情緒狀態有關。大部分天竺鼠一輩子都不會發出這種聲音。</p>
           <span class="sound-mood mood-neutral">❓ 原因不明 / 罕見</span>
           <div class="sound-video">
-            <iframe src="https://www.youtube.com/embed/BB8j3X3UyZA?start=195" loading="lazy" allowfullscreen></iframe>
+            <iframe title="Chirping 啁啾聲示範影片" src="https://www.youtube.com/embed/BB8j3X3UyZA?start=195" loading="lazy" allowfullscreen></iframe>
           </div>
         </div>
       </div>
@@ -584,14 +606,15 @@
 
     <div class="sound-sources">
       <strong>資料來源：</strong><br>
-      <a href="https://thevetdesk.com/pet-behavior/guinea-pigs/guinea-pig-sounds/" target="_blank" rel="noopener">The Vet Desk — 9 Vet-Verified Guinea Pig Sounds and Their Meanings</a>（原 PetKeen）<br>
-      <a href="https://mgpr.org/newsite/GP_Info/Guinea%20Pig%20Sounds.htm" target="_blank" rel="noopener">Metropolitan Guinea Pig Rescue — Guinea Pig Sounds</a><br>
+      <a href="https://thevetdesk.com/pet-behavior/guinea-pigs/guinea-pig-sounds/" target="_blank" rel="noopener">The Vet Desk — 9 Vet-Verified Guinea Pig Sounds and Their Meanings</a>（原 PetKeen）
+      <a href="https://mgpr.org/newsite/GP_Info/Guinea%20Pig%20Sounds.htm" target="_blank" rel="noopener">Metropolitan Guinea Pig Rescue — Guinea Pig Sounds</a>
       <a href="https://pubmed.ncbi.nlm.nih.gov/961122/" target="_blank" rel="noopener">Berryman (1976) Guinea-pig Vocalizations: Their Structure, Causation and Function</a>
     </div>
   </div>
 
   <!-- Tab 5: 小遊戲 -->
-  <div class="tab-content" id="tab-game">
+  <div class="tab-content" id="tab-game" role="tabpanel" aria-labelledby="tabGameBtn">
+    <h2 class="sr-only">覓食小遊戲</h2>
     <div class="game-wrapper">
       <div class="game-canvas-wrap">
         <canvas class="game-canvas" id="gameCanvas"></canvas>
@@ -640,16 +663,21 @@
       </div>
     </div>
   </div>
+  </main>
 
-  <div class="footer">🐹 用愛守護每一隻小天竺鼠</div>
+  <footer class="footer">🐹 用愛守護每一隻小天竺鼠</footer>
 </div>
 
 <script>
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
     document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
     btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
     document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
   });
 });
@@ -691,7 +719,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     {e:'🍞',n:'麵包',st:15,li:-20,w:10,tip:'穀物難消化，容易脹氣'}
   ];
 
-  let S, keys={}, touchDir={x:0,y:0}, touchOn=false, animId=null, lt=0, spawnT=0, floats=[], startT=0, gameTabActive=false, eatLog=[];
+  let S, keys={}, touchDir={x:0,y:0}, touchOn=false, animId=null, lt=0, spawnT=0, floats=[], gameTabActive=false, eatLog=[];
 
   function wRand(arr){
     let tot=arr.reduce((s,i)=>s+i.w,0), r=Math.random()*tot;
@@ -700,12 +728,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   }
 
   function initS(){
-    return {life:100,stamina:100,score:0,px:W/2,py:H/2,items:[],debuff:0,shake:0,running:false};
+    return {life:100,stamina:100,score:0,px:W/2,py:H/2,items:[],debuff:0,shake:0,running:false,time:0};
   }
 
   function getSpd(){
     let s=CFG.baseSpeed;
-    const elapsed=(performance.now()-startT)/1000;
+    const elapsed=S.time;
     s+=Math.min(elapsed/60*30,60);
     if(S.stamina<CFG.lowStamina) s*=CFG.lowSpeedMult;
     if(S.debuff>0) s*=CFG.badSpeedMult;
@@ -714,7 +742,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 
   function spawn(){
     if(S.items.length>=CFG.maxItems)return;
-    const elapsed=(performance.now()-startT)/1000;
+    const elapsed=S.time;
     const badChance=Math.min(0.45,0.3+elapsed/300);
     const suppChance=0.08;
     const r=Math.random();
@@ -771,12 +799,13 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     if(!eatLog.length){ul.innerHTML='<li class="eat-log-empty">還沒吃到任何東西</li>';return;}
     ul.innerHTML=eatLog.map(l=>{
       const cls=l.cat==='g'?'eat-log-good':l.cat==='s'?'eat-log-sup':'eat-log-bad';
-      return '<li class="'+cls+'">'+l.e+' '+l.n+' '+l.effect+'<br><span style="font-size:11px;color:#7A4E2E;font-weight:400">'+l.tip+'</span></li>';
+      return '<li class="'+cls+'">'+l.e+' '+l.n+' '+l.effect+'<br><span style="font-size:12px;color:#7A4E2E;font-weight:400">'+l.tip+'</span></li>';
     }).join('');
   }
 
   function update(dt){
     if(!S.running)return;
+    S.time+=dt;
     let dx=0,dy=0;
     if(keys.ArrowLeft||keys.KeyA)dx-=1;
     if(keys.ArrowRight||keys.KeyD)dx+=1;
@@ -789,7 +818,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     S.px=Math.max(22,Math.min(W-22,S.px+dx*spd));
     S.py=Math.max(55,Math.min(H-22,S.py+dy*spd));
 
-    const elapsed=(performance.now()-startT)/1000;
+    const elapsed=S.time;
     const drainMult=1+Math.min(elapsed/120,1.5);
     S.stamina=Math.max(0,S.stamina-CFG.staminaDrain*drainMult*dt);
     if(S.stamina<CFG.lowStamina) S.life=Math.max(0,S.life-CFG.lowLifeDrain*dt);
@@ -906,7 +935,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   }
 
   function startGame(){
-    S=initS();S.running=true;floats=[];eatLog=[];spawnT=0;startT=performance.now();
+    S=initS();S.running=true;floats=[];eatLog=[];spawnT=0;
     for(let i=0;i<5;i++)spawn();
     document.getElementById('gameStart').classList.add('hidden');
     document.getElementById('gameOver').classList.add('hidden');
@@ -922,10 +951,12 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   }
 
   document.addEventListener('keydown',e=>{
+    if(!gameTabActive||!S||!S.running)return;
     keys[e.code]=true;
     if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key))e.preventDefault();
   });
   document.addEventListener('keyup',e=>{keys[e.code]=false;});
+  window.addEventListener('blur',()=>{keys={};});
 
   // Joystick (mobile)
   const jZone=document.getElementById('joystickZone');
@@ -935,7 +966,8 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
     e.preventDefault();if(!S||!S.running)return;
     const r=jZone.getBoundingClientRect();
     const cx=r.left+r.width/2,cy=r.top+r.height/2;
-    const t=e.touches[0];
+    const t=e.targetTouches[0];
+    if(!t)return;
     let dx=t.clientX-cx,dy=t.clientY-cy;
     const dist=Math.sqrt(dx*dx+dy*dy);
     if(dist>jMaxR){dx=dx/dist*jMaxR;dy=dy/dist*jMaxR;}
@@ -977,6 +1009,7 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   origTabClick.forEach(b=>b.addEventListener('click',()=>setTimeout(checkGameTab,10)));
 
   document.addEventListener('visibilitychange',()=>{
+    if(document.hidden)keys={};
     if(!document.hidden&&gameTabActive&&S&&S.running){lt=performance.now();if(!animId)animId=requestAnimationFrame(loop);}
   });
 })();
