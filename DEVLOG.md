@@ -27,3 +27,7 @@
 - 食物知識小提示讓遊戲體驗和知識傳遞同時發生
 
 **部署**：Cloudflare Pages `guinea-pig.pages.dev`
+
+## 2026-08-29 清明上河鼠圖橫幅
+- 三面板 gpt-image 生成→色調對齊→羽化拼接→接縫交 image_gen 重畫（scroll/tools.py、make_video.sh）。首頁掛 CSS 無限橫捲版；影片版留本機。
+- 踩坑：imagegen plugin `-i` 吞 prompt，已在 plugin dist 加 `--`；scroll/ 不進公開 repo。
