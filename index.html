@@ -26,6 +26,15 @@
   .container { max-width: 1120px; margin: 0 auto; padding: 20px 16px 40px; }
 
   /* Header */
+  /* 清明上河鼠圖 長卷橫幅 */
+  .scroll-banner { position: relative; overflow: hidden; border-radius: 18px; margin: 4px 0 22px; box-shadow: 0 8px 24px rgba(122,78,46,.18); border: 3px solid #E9D9BE; background: #E9D9BE; }
+  .scroll-track { display: flex; width: max-content; animation: scrollpan 90s linear infinite; }
+  .scroll-track img { height: 220px; width: auto; display: block; user-select: none; -webkit-user-drag: none; }
+  .scroll-banner:hover .scroll-track { animation-play-state: paused; }
+  .scroll-caption { position: absolute; left: 12px; bottom: 10px; background: rgba(122,78,46,.82); color: #FFF6E8; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 4px 12px; border-radius: 999px; }
+  @keyframes scrollpan { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (max-width: 600px) { .scroll-track img { height: 150px; } .scroll-track { animation-duration: 70s; } }
+  @media (prefers-reduced-motion: reduce) { .scroll-track { animation: none; } }
   .header { text-align: center; padding: 40px 0 24px; }
   .header h1 { font-family: 'Baloo 2', 'Noto Sans TC', sans-serif;
                font-size: 42px; font-weight: 800; color: #7A4E2E; }
@@ -247,6 +256,14 @@
     <h1><span class="hero-emoji">🐹</span>天竺鼠小百科</h1>
     <p>認識這些圓滾滾的小可愛</p>
   </header>
+
+  <section class="scroll-banner" aria-label="清明上河鼠圖長卷">
+    <div class="scroll-track">
+      <img src="img/scroll_banner.webp" alt="以清明上河圖風格繪製的天竺鼠市集長卷" decoding="async">
+      <img src="img/scroll_banner.webp" alt="" aria-hidden="true" decoding="async">
+    </div>
+    <span class="scroll-caption">清明上河鼠圖 · 滑鼠停留可暫停</span>
+  </section>
 
   <nav class="tabs" aria-label="百科分類">
     <div class="tab-group" role="tablist">
@@ -1014,5 +1031,6 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
   });
 })();
 </script>
+<script src="https://feedback-relay.2vkhym52rn.workers.dev/widget.js" data-site="guinea-pig" defer></script>
 </body>
 </html>
