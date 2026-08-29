@@ -27,12 +27,12 @@
 
   /* Header */
   /* 清明上河鼠圖 長卷橫幅 */
-  .scroll-banner { position: relative; overflow: hidden; border-radius: 18px; margin: 4px 0 22px; box-shadow: 0 8px 24px rgba(122,78,46,.18); border: 3px solid #E9D9BE; background: #E9D9BE; }
-  .scroll-track { display: flex; width: max-content; animation: scrollpan 90s linear infinite; }
+  .scroll-banner { position: relative; overflow: hidden; width: 100%; max-width: 100%; min-width: 0; contain: inline-size layout paint; border-radius: 18px; margin: 4px 0 22px; box-shadow: 0 8px 24px rgba(122,78,46,.18); border: 3px solid #E9D9BE; background: #E9D9BE; }
+  .scroll-track { display: flex; width: max-content; will-change: transform; animation: scrollpan 90s linear infinite; }
   .scroll-track img { height: 220px; width: auto; display: block; user-select: none; -webkit-user-drag: none; }
   .scroll-banner:hover .scroll-track { animation-play-state: paused; }
   .scroll-caption { position: absolute; left: 12px; bottom: 10px; background: rgba(122,78,46,.82); color: #FFF6E8; font-family: 'Noto Sans TC', sans-serif; font-size: 13px; letter-spacing: 2px; padding: 4px 12px; border-radius: 999px; }
-  @keyframes scrollpan { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes scrollpan { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
   @media (max-width: 600px) { .scroll-track img { height: 150px; } .scroll-track { animation-duration: 70s; } }
   @media (prefers-reduced-motion: reduce) { .scroll-track { animation: none; } }
   .header { text-align: center; padding: 40px 0 24px; }
@@ -1032,5 +1032,19 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 })();
 </script>
 <script src="https://feedback-relay.2vkhym52rn.workers.dev/widget.js" data-site="guinea-pig" defer></script>
+<script>
+// 橫幅動畫保險：若 CSS 動畫沒跑（部分手機/省電模式），改用 JS 推進
+(function(){
+  var track=document.querySelector('.scroll-track'); if(!track) return;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches; if(reduce) return;
+  setTimeout(function(){
+    var m=getComputedStyle(track).transform;
+    if(m && m!=='none' && m!=='matrix(1, 0, 0, 1, 0, 0)') return; // CSS 動畫正常
+    track.style.animation='none'; var x=0, last=null, half=track.scrollWidth/2, speed=half/90000;
+    function step(t){ if(last!==null){ x+= (t-last)*speed; if(x>=half) x-=half; track.style.transform='translate3d(-'+x+'px,0,0)'; } last=t; requestAnimationFrame(step); }
+    requestAnimationFrame(step);
+  },1200);
+})();
+</script>
 </body>
 </html>
